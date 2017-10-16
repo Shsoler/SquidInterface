@@ -1,0 +1,18 @@
+<html>
+  <head></head>
+  <body>
+    <table>
+    {% for message in texto %}
+      <tr>
+        <td>{{message}}</p>
+        <td><a href="/addpalavra/Excluir/{{message}}">Excluir</a></td>
+      </tr>
+    {% endfor %}
+    </table>
+    <form action="/addpalavra" method="post">
+      <p>Palavra a ser bloqueada</p><br>
+      <input type="text" name="palavra"/>
+      <input type="submit" name="form" value="Adicionar"/>
+    </form>
+  </body>
+</html>
