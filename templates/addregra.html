@@ -1,0 +1,83 @@
+<html>
+  <head></head>
+  <body>
+    <form id="form" action="/adicionar" method="post">
+      <p>Adicionar Regra</p><br>
+      <input type="text" name="nome"/>
+	  <br>
+	  <select name="tipo" onchange="change(this)">
+		<option value="DST" >DST IP</option>
+		<option value="SRC">SRC IP</option>
+		<option value="DSTDOMAIN">DOMINIO</option>
+		<option value="TIME">TEMPO</option>
+		<option value="URL_REGEX  -I">PALAVRA</option>
+		<option value="aninhado">Aninhado</option>
+	  </select>
+	  <div id="arquivos">
+		<input type="radio" name="arquivo" value="false" onclick="metodoCond(&quot;linha&quot;)" checked>Linha
+		<br>
+		<input type="radio" name="arquivo" value="true" onclick="metodoCond(&quot;arquivo&quot;)" >Arquivo
+		<br>
+	 </div>
+	  <br id="incond">
+
+	  <input id="inputcond" type="text" name="cond"/>
+	  <textarea name="condarquivo" hidden></textarea>
+	  <br>
+	  <input type="radio" name="perm" value="ALLOW" checked>Permitir
+	  <br>
+	  <input type="radio" name="perm" value="DENY">Negar
+	  <br>
+      <input type="submit" name="form" value="Adicionar"/>
+    </form>
+	<script>
+		function metodoCond(tipo){
+			let linha = document.getElementsByName("cond");
+			let area = document.getElementsByName("condarquivo");
+			if(tipo == "arquivo"){
+				linha[0].setAttribute("hidden",true);
+				area[0].removeAttribute("hidden");
+			}else{
+				area[0].setAttribute("hidden",true);
+				linha[0].removeAttribute("hidden");	
+			}
+		}
+		function change(tipo){
+			let removeinput = document.getElementById("inputcond");
+			removeinput.remove();
+			let input = document.createElement("input");
+			let arquivos = document.getElementById("arquivos");
+			if(tipo.value=="TIME"){
+				input.type = "time";
+				arquivos.setAttribute("hidden",true);
+			}
+			else{
+				arquivos.removeAttribute("hidden");
+				input.type="text";
+			}
+			input.id = "inputcond";
+			input.name="cond";
+			let elementoadd = document.getElementById("incond");
+			elementoadd.after(input);
+
+			
+			if(tipo.value=="TIME"){
+				let input2 = document.createElement("input");
+				input2.type = "time";
+				input2.name = "cond2";
+				elementoadd.after(input2);
+			}
+		}
+	function ValidateIPaddress()   
+	{  
+		alert("teste");
+		if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(getElementById("inputcond").value))  
+		{  
+			return (true)  
+		}  
+		alert("IP Invalido")  
+		return (false)  
+	}  
+	</script>
+  </body>
+</html>

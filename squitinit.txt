@@ -1,0 +1,35 @@
+			let input = document.createElement("input");
+			if(tipo == "DST" ||tipo == "SRC" ||tipo == "DSTDOMAIN" ){
+				input.type = "text";
+			}
+			if(tipo == "TIME"){
+				input.type="time";
+			}
+			input.id = "inputcond";
+			input.name="name";
+			let elemento = getElementByName("cond");
+			elemento.remove();
+			let elementoadd = getElementById("incond");
+			elementoadd.after(input)
+			
+				  <input type="radio" name="tipo" value="DST" onclick="change(&quot;text&quot;)" checked> DST IP
+	  <br>
+	  <input type="radio" name="tipo" value="SRC" onclick="change(&quot;text&quot;)"> SRC IP
+	  <br>
+	  <input type="radio" name="tipo" value="DSTDOMAIN" onclick="change(&quot;text&quot;)"> DOMINIO
+	  	  <br>
+	  <input type="radio" name="tipo" value="TIME" onclick="change(&quot;time&quot;)"> TIME
+	  
+	  			
+			
+			let elementoradio = document.createElement("input");
+			elementoradio.type="radio";
+			elementoradio.name="arquivo";
+			elementoradio.value="true";
+			elementoadd.after(elementoradio);
+			
+			let elementoradio2 = document.createElement("input")
+			elementoradio2.type="radio";
+			elementoradio2.name="arquivo";
+			elementoradio2.value="false";
+			elementoadd.after(elementoradio2);

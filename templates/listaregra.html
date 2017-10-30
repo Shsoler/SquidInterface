@@ -1,0 +1,15 @@
+<html>
+  <head></head>
+  <body>
+    <table>
+    {% for regra in regras %}
+      <tr>
+        <td>{{regra}}</p></td>
+		<td>
+		 <td><a href="/listar/Excluir/{{regra}}">Excluir</a></td>
+		</td>
+      </tr>
+    {% endfor %}
+    </table>
+  </body>
+</html>

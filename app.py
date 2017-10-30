@@ -71,6 +71,71 @@ def addpalavraform():
     file.close()
     return addpalavra()
 
+@app.route("/adicionar")
+def adicionarRegra():
+	return render_template("addregra.html")
+
+@app.route("/listar")
+def listarRegra():
+	file = open("squid.conf","r")
+	squid = file.read()
+	squidList = squid.split("#regras")
+	print(squidList[1])
+	regras = squidList[1].split("#regra")
+	regrasLimpas = list()
+	for x in regras:
+		x.strip()
+		if x != '\n':
+			regrasLimpas.append(x)
+	print(regrasLimpas)
+	regrasFinais = list()
+	for x in regrasLimpas:
+		regrasFinais.append(x.split(" ")[1].split("\n")[0])	
+	return render_template("listaregra.html",regras = regrasFinais)
+
+@app.route("/listar/Excluir/<regra>",methods=['GET'])
+def removerRegraPost(regra):
+	file = open("squid.conf","r")
+	squid = file.readlines()
+	file.close()
+	print(regra)
+	file = open("squid.conf","w")
+	for x in squid:
+		if regra not in x:
+			file.write(x)
+	file.truncate()
+	file.close()
+	return listarRegra()
+	
+@app.route("/adicionar",methods=['POST'])
+def adicionarRegraPost():
+	nome = request.form['nome']
+	tipo = request.form['tipo']
+	cond = request.form['cond']
+	perm = request.form['perm']
+	isArq = request.form['arquivo']
+	if tipo=="TIME":
+		condInicial = request.form['cond2']
+		cond = condInicial+"-"+cond
+	print(isArq)
+	if isArq == "true":
+		arquivo = request.form['condarquivo']
+		cond = nome+"-Arquivo"
+		file = open(cond,"w")
+		file.writelines(arquivo)
+		file.close()
+		cond = "\""+cond+"\""
+	fileregra = open("squid.conf","a+")
+	regra = list()
+	regra.append("#regra "+ nome)
+	regra.append("ACL "+nome+" "+tipo+" "+cond)
+	regra.append("HTTP_ACCESS "+ perm+" "+nome)
+	for r in regra:
+		fileregra.write(r+"\n")
+	fileregra.close()
+	print(regra)
+	return listarRegra()
+	
 if __name__ == '__main__':
     app.secret_key = "secret_key"
     app.run(debug=True)
