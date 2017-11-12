@@ -178,7 +178,7 @@ def adicionarRegraPost():
 	else:
 		regra.append("#regra "+nome)
 		regra.append("acl "+nome+ " time " + request.form['cond3']+"-"+request.form['cond2'])
-		regra.append("acl "+nome+"2"+ " url_regex -I "+cond)
+		regra.append("acl "+nome+"2"+ " url_regex -i "+cond)
 		regra.append("http_access "+perm+" "+nome+" "+nome+"2")
 	for r in regra:
 		fileregra.write(r+"\n")
