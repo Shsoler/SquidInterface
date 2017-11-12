@@ -48,7 +48,12 @@
 			removeinput.remove();
 			let input = document.createElement("input");
 			let arquivos = document.getElementById("arquivos");
-			document.getElementById("time2").remove();
+
+			let time2 = document.getElementById("time2");
+
+			if(!time2){
+				time2.remove();
+			}
 
 
 			if(tipo.value=="time"){
