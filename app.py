@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import request
 from flask import render_template,redirect,flash,session,abort
-from subprocess import run
+import subprocess
 import hashlib
 app = Flask(__name__)
 
@@ -115,7 +115,7 @@ def removerRegraPost(regra):
 			file.write(x)
 	file.truncate()
 	file.close()
-	run(["service","squid3","restart"])
+	subprocess.check_call(["service","squid3","restart"])
 	return listarRegra()
 	
 @app.route("/adicionarUser",methods=['POST'])
@@ -126,7 +126,7 @@ def addUser():
 	file = open("/etc/squid3/squid_passwd","w")
 	file.write(user+":"+m.hexdigest())
 	file.close()
-	run(["service","squid3","restart"])
+	subprocess.check_call(["service","squid3","restart"])
 	return listarUser()
 
 @app.route("/adicionarUser")
@@ -149,7 +149,7 @@ def listarUserDel(excluir):
 		if excluir not in x:
 			file.write(x)
 	file.close()
-	run(["service","squid3","restart"])
+	subprocess.check_call(["service","squid3","restart"])
 	return listarUser()
 	
 @app.route("/adicionar",methods=['POST'])
@@ -184,7 +184,7 @@ def adicionarRegraPost():
 		fileregra.write(r+"\n")
 	fileregra.close()
 	print(regra)
-	run(["service","squid3","restart"])
+	subprocess.check_call(["service","squid3","restart"])
 	return listarRegra()
 	
 if __name__ == '__main__':
