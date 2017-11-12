@@ -2,19 +2,22 @@
 <html>
 <head>
 	<title>Adicionar Usuario</title>
+	<link rel="stylesheet" type="text/css" href="estilo.css">
 </head>
 <body>
-	<form id="form" action="/adicionarUser" method="post">
-		<p>Adicionar Usuario</p>
-		<br>
-		<p>User: </p>
-		<input type="text" name="user">
-		<br>
-		<p>Senha: </p>
-		<input type="password" name="senha">
-		<br>
-		<input type="submit" name="Enviar">
-	</form>
-	<h3><a href="/">Home</a></h3>
+	<h1>>Adicionar Usuario</h1>
+	<div class="container">
+		<form id="form" action="/adicionarUser" method="post">
+			<br>
+			<p>User: </p>
+			<input type="text" name="user">
+			<br>
+			<p>Senha: </p>
+			<input type="password" name="senha">
+			<br>
+			<input id="submit" type="submit" name="Enviar">
+		</form>
+	</div>
+	<h3 class="retorno"><a href="/">Home</a></h3>
 </body>
 </html>

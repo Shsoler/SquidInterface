@@ -1,6 +1,11 @@
 <html>
-  <head></head>
+  <head>
+  	<title>Cadastra Regra</title>
+  	<link rel="stylesheet" type="text/css" href="estilo.css">
+  </head>
   <body>
+  	<h1>Cadastrar Regra</h1>
+  	<div class="container">
     <form id="form" action="/adicionar" method="post">
       <p>Adicionar Regra</p><br>
       <input type="text" name="nome"/>
@@ -28,9 +33,10 @@
 	  <br>
 	  <input type="radio" name="perm" value="deny">Negar
 	  <br>
-      <input type="submit" name="form" value="Adicionar"/>
+      <input id="submit" type="submit" name="form" value="Adicionar"/>
     </form>
-    <h3><a href="/">Home</a></h3>
+</div>
+    <h3 class="retorno"><a href="/">Home</a></h3>
 	<script>
 		function metodoCond(tipo){
 			let linha = document.getElementsByName("cond");
@@ -50,9 +56,13 @@
 			let arquivos = document.getElementById("arquivos");
 
 			let time2 = document.getElementById("time2");
+			let time3 = document.getElementById("time3");
 
-			if(!time2){
+			if(time2){
 				time2.remove();
+			}
+			if(time3){
+				time3.remove();
 			}
 
 
@@ -72,20 +82,22 @@
 			
 			if(tipo.value=="time"){
 				let input2 = document.createElement("input");
-				input2.type = "time2"
+				input2.id = "time2";
 				input2.type = "time";
 				input2.name = "cond2";
 				elementoadd.after(input2);
 			}
-			if(tipo.value=="aninado"){
+			if(tipo.value=="aninhado"){
 				let input2 = document.createElement("input");
 				input2.type = "time";
 				input2.name = "cond2";
+				input2.id = "time2";
 				elementoadd.after(input2);
 				
 				let input3 = document.createElement("input");
 				input3.type = "time";
 				input3.name = "cond3";
+				input3.id = "time3"
 				elementoadd.after(input3);
 			}
 		}

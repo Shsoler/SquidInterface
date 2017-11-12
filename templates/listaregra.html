@@ -1,17 +1,25 @@
 <html>
-  <head></head>
+  <head>
+    <link rel="stylesheet" type="text/css" href="estilo.css">
+    <title>Regras</title>
+  </head>
   <body>
-    <table>
-    {% for regra in regras %}
-      <tr>
-        <td>{{regra}}</p></td>
-		<td>	
-		 <td><a href="/listar/Excluir/{{regra}}">Excluir</a></td>
-		</td>
-      </tr>
-    {% endfor %}
+    <h1>Regras</h1>
+    <div class="container">
+      <table>
+      {% for regra in regras %}
+        <tr>
+          <td>{{regra}}</p></td>
+  		<td>	
+  		 <td><a href="/listar/Excluir/{{regra}}">Excluir</a></td>
+  		</td>
+        </tr>
+      {% endfor %}
     </table>
-	<h3><a href="/adicionar">Adicionar Regra</a></h3>
-  <h3><a href="/">Voltar Inicio</a></h3>
+  </div>
+  <div class="retorno">
+  	<h3><a href="/adicionar">Adicionar Regra</a></h3>
+    <h3><a href="/">Voltar Inicio</a></h3>
+  </div>
   </body>
 </html>

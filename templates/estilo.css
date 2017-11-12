@@ -1,0 +1,50 @@
+*{
+	margin: 4px 4px 4px 4px;
+	font-family: "Arial";
+}
+body {
+	background-color: #676768 ;
+}
+h1,.retorno{
+	background-color: #000000;
+	color: #e03e0b;
+	border: 3px;
+	border-radius: 8px;
+	padding: 1em;
+}
+.container{
+	align-items: center;
+	background: #e03e0b;
+
+	border: 3px;
+	border-radius: 8px;
+	padding: 1em;
+}
+ul{
+	list-style-type: none;
+}
+input[type=text],input[type=password]{
+	border:none;
+	border-bottom: 2px solid black;
+	background-color: #e03e0b;
+}
+input[type=button],input[type=submit],input[type=time], select,textarea{
+	background-color: black;
+	border:3px solid black;
+	color:#e03e0b;
+	border-radius: 5px;
+}
+input[type="radio"]{
+	background: black;
+	border: 5px solid black;
+}
+#submit:hover{
+	border:3px solid white;
+	background-color: white;
+}
+a{
+	color:#e03e0b;
+}
+.container a{
+	color: black;
+}

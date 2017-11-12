@@ -81,9 +81,6 @@ def addpalavraform():
     file.close()
     return addpalavra()
 
-@app.route("/adicionar")
-def adicionarRegra():
-	return render_template("addregra.html")
 
 @app.route("/listar")
 def listarRegra():
@@ -188,6 +185,14 @@ def adicionarRegraPost():
 	subprocess.check_call(["squid3","-k","reconfigure"])
 	return listarRegra()
 	
+@app.route("/adicionar")
+def adicionarRegra():
+	return render_template("addregra.html")
+	
+@app.route("/teste")
+def teste():
+	flash("teste")
+	return "hello"
 if __name__ == '__main__':
     app.secret_key = "secret_key"
     app.run(debug=True,host="0.0.0.0")
