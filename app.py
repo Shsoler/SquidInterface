@@ -156,8 +156,19 @@ def adicionarRegraPost():
 	cond = request.form['cond']
 	perm = request.form['perm']
 	isArq = request.form['arquivo']
+
+	error = ""
+	if nome == null:
+		error = "Nome faltando"
+	if tipo == null:
+		error = "Tipo faltando"
+	if cond == null:
+		error = "Condição faltando"
+
 	if tipo=="time":
 		condInicial = request.form['cond2']
+		if condInicial == null:
+			error = "Condição faltando"
 		cond = condInicial+"-"+cond
 	if isArq == "true":
 		arquivo = request.form['condarquivo']
@@ -188,7 +199,7 @@ def adicionarRegraPost():
 @app.route("/adicionar")
 def adicionarRegra():
 	return render_template("addregra.html")
-	
+
 @app.route("/teste")
 def teste():
 	flash("teste")
