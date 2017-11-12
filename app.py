@@ -159,7 +159,7 @@ def adicionarRegraPost():
 	cond = request.form['cond']
 	perm = request.form['perm']
 	isArq = request.form['arquivo']
-	if tipo=="TIME":
+	if tipo=="time":
 		condInicial = request.form['cond2']
 		cond = condInicial+"-"+cond
 	if isArq == "true":
@@ -171,15 +171,15 @@ def adicionarRegraPost():
 		cond = "\""+cond+"\""
 	fileregra = open("/etc/squid3/squid.conf","a+")
 	regra = list()
-	if tipo != "ANINHADO":
+	if tipo != "aninhado":
 		regra.append("#regra "+ nome)
-		regra.append("ACL "+nome+" "+tipo+" "+cond)
-		regra.append("HTTP_ACCESS "+ perm+" "+nome)
+		regra.append("acl "+nome+" "+tipo+" "+cond)
+		regra.append("http_access "+ perm+" "+nome)
 	else:
 		regra.append("#regra "+nome)
-		regra.append("ACL "+nome+ " TIME " + request.form['cond3']+"-"+request.form['cond2'])
-		regra.append("ACL "+nome+"2"+ " URL_REGEX -I "+cond)
-		regra.append("HTTP_ACCESS "+perm+" "+nome+" "+nome+"2")
+		regra.append("acl "+nome+ " time " + request.form['cond3']+"-"+request.form['cond2'])
+		regra.append("acl "+nome+"2"+ " url_regex -I "+cond)
+		regra.append("http_access "+perm+" "+nome+" "+nome+"2")
 	for r in regra:
 		fileregra.write(r+"\n")
 	fileregra.close()

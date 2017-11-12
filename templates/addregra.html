@@ -6,12 +6,12 @@
       <input type="text" name="nome"/>
 	  <br>
 	  <select name="tipo" onchange="change(this)">
-		<option value="DST" >DST IP</option>
-		<option value="SRC">SRC IP</option>
-		<option value="DSTDOMAIN">DOMINIO</option>
-		<option value="TIME">TEMPO</option>
-		<option value="URL_REGEX  -I">PALAVRA</option>
-		<option value="ANINHADO">Aninhado</option>
+		<option value="dst" >DST IP</option>
+		<option value="src">SRC IP</option>
+		<option value="dstdomain">DOMINIO</option>
+		<option value="time">TEMPO</option>
+		<option value="url_regex  -I">PALAVRA</option>
+		<option value="aninhado">Aninhado</option>
 	  </select>
 	  <div id="arquivos">
 		<input type="radio" name="arquivo" value="false" onclick="metodoCond(&quot;linha&quot;)" checked>Linha
@@ -48,7 +48,7 @@
 			removeinput.remove();
 			let input = document.createElement("input");
 			let arquivos = document.getElementById("arquivos");
-			if(tipo.value=="TIME"){
+			if(tipo.value=="time"){
 				input.type = "time";
 				arquivos.setAttribute("hidden",true);
 			}
@@ -62,13 +62,13 @@
 			elementoadd.after(input);
 
 			
-			if(tipo.value=="TIME"){
+			if(tipo.value=="time"){
 				let input2 = document.createElement("input");
 				input2.type = "time";
 				input2.name = "cond2";
 				elementoadd.after(input2);
 			}
-			if(tipo.value=="ANINHADO"){
+			if(tipo.value=="aninado"){
 				let input2 = document.createElement("input");
 				input2.type = "time";
 				input2.name = "cond2";
