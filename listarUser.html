@@ -1,0 +1,16 @@
+<html>
+  <head></head>
+  <body>
+    <table>
+    {% for senha in senhas %}
+      <tr>
+        <td>{{senha}}</p></td>
+		<td>	
+		 <td><a href="/listar/Excluir/{{senha}}">Excluir</a></td>
+		</td>
+      </tr>
+    {% endfor %}
+    </table>
+	<h3><a href="/adicionarUser">Adicionar Regra</a></h3>
+  </body>
+</html>

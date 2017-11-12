@@ -1,16 +1,26 @@
 from flask import Flask
 from flask import request
 from flask import render_template,redirect,flash,session,abort
-
+from subprocess import call
+import hashlib
 app = Flask(__name__)
 
+def resetarConf():
+	file.open("squid.conf","r")
+	original = file.readlines()
+	file.close()
+	file.open("/etc/squid3/squid.conf","w")
+	file.writelines(original)
+	file.close()
+
 #login
+
 @app.route("/")
 def home():
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
-        return render_template('index.html')
+        return render_template('home.html')
 
 @app.route('/login',methods=['POST'])
 def logar():
@@ -77,7 +87,7 @@ def adicionarRegra():
 
 @app.route("/listar")
 def listarRegra():
-	file = open("squid.conf","r")
+	file = open("/etc/squid3/squid.conf","r")
 	squid = file.read()
 	squidList = squid.split("#regras")
 	print(squidList[1])
@@ -95,17 +105,52 @@ def listarRegra():
 
 @app.route("/listar/Excluir/<regra>",methods=['GET'])
 def removerRegraPost(regra):
-	file = open("squid.conf","r")
+	file = open("/etc/squid3/squid.conf","r")
 	squid = file.readlines()
 	file.close()
 	print(regra)
-	file = open("squid.conf","w")
+	file = open("/etc/squid3/squid.conf","w")
 	for x in squid:
 		if regra not in x:
 			file.write(x)
 	file.truncate()
 	file.close()
+	call(["service","squid3","restart"])
 	return listarRegra()
+	
+@app.route("/adicionarUser",methods=['POST'])
+def addUser():
+	user = request.form['user']
+	senha = request.form['senha']
+	m = hashlib.md5(str(senha).encode('utf-8'))
+	file = open("/etc/squid3/squid_pass","w")
+	file.write(user+":"+m.hexdigest())
+	file.close()
+	call(["service","squid3","restart"])
+	return listarUser()
+
+@app.route("/adicionarUser")
+def addUserClear():
+	return render_template("adicionarUser.html")
+	
+@app.route("/listarUser")
+def listarUser():
+	file = open("/etc/squid3/squid_pass","r")
+	senhas = file.readlines()
+	return render_template("listaUser.html",senhas = senhas)
+
+@app.route("/listarUser/Excluir/<excluir>",methods=['GET'])
+def listarUserDel(excluir):
+	file = open("/etc/squid3/squid_pass","r")
+	senhas = file.readlines()
+	file.close()
+	file = open("/etc/squid3/squid_pass","w")
+	for x in file:
+		if excluir not in x:
+			file.write(x)
+	file.close()
+	call(["service","squid3","restart"])
+	return listarUser()
 	
 @app.route("/adicionar",methods=['POST'])
 def adicionarRegraPost():
@@ -117,23 +162,29 @@ def adicionarRegraPost():
 	if tipo=="TIME":
 		condInicial = request.form['cond2']
 		cond = condInicial+"-"+cond
-	print(isArq)
 	if isArq == "true":
 		arquivo = request.form['condarquivo']
 		cond = nome+"-Arquivo"
-		file = open(cond,"w")
+		file = open("/etc/squid3/"+cond,"w")
 		file.writelines(arquivo)
 		file.close()
 		cond = "\""+cond+"\""
-	fileregra = open("squid.conf","a+")
+	fileregra = open("/etc/squid3/squid.conf","a+")
 	regra = list()
-	regra.append("#regra "+ nome)
-	regra.append("ACL "+nome+" "+tipo+" "+cond)
-	regra.append("HTTP_ACCESS "+ perm+" "+nome)
+	if tipo != "ANINHADO":
+		regra.append("#regra "+ nome)
+		regra.append("ACL "+nome+" "+tipo+" "+cond)
+		regra.append("HTTP_ACCESS "+ perm+" "+nome)
+	else:
+		regra.append("#regra "+nome)
+		regra.append("ACL "+nome+ " TIME " + request.form['cond3']+"-"+request.form['cond2'])
+		regra.append("ACL "+nome+"2"+ " URL_REGEX -I "+cond)
+		regra.append("HTTP_ACCESS "+perm+" "+nome+" "+nome+"2")
 	for r in regra:
 		fileregra.write(r+"\n")
 	fileregra.close()
 	print(regra)
+	call(["service","squid3","restart"])
 	return listarRegra()
 	
 if __name__ == '__main__':
