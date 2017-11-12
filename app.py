@@ -135,16 +135,16 @@ def addUserClear():
 	
 @app.route("/listarUser")
 def listarUser():
-	file = open("/etc/squid3/squid_pass","r")
+	file = open("/etc/squid3/squid_passwd","r")
 	senhas = file.readlines()
 	return render_template("listaUser.html",senhas = senhas)
 
 @app.route("/listarUser/Excluir/<excluir>",methods=['GET'])
 def listarUserDel(excluir):
-	file = open("/etc/squid3/squid_pass","r")
+	file = open("/etc/squid3/squid_passwd","r")
 	senhas = file.readlines()
 	file.close()
-	file = open("/etc/squid3/squid_pass","w")
+	file = open("/etc/squid3/squid_passwd","w")
 	for x in file:
 		if excluir not in x:
 			file.write(x)
