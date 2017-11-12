@@ -123,7 +123,7 @@ def addUser():
 	user = request.form['user']
 	senha = request.form['senha']
 	m = hashlib.md5(str(senha).encode('utf-8'))
-	file = open("/etc/squid3/squid_pass","w")
+	file = open("/etc/squid3/squid_passwd","w")
 	file.write(user+":"+m.hexdigest())
 	file.close()
 	call(["service","squid3","restart"])
