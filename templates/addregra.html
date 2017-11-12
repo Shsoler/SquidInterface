@@ -24,9 +24,9 @@
 	  <input id="inputcond" type="text" name="cond"/>
 	  <textarea name="condarquivo" hidden></textarea>
 	  <br>
-	  <input type="radio" name="perm" value="ALLOW" checked>Permitir
+	  <input type="radio" name="perm" value="allow" checked>Permitir
 	  <br>
-	  <input type="radio" name="perm" value="DENY">Negar
+	  <input type="radio" name="perm" value="deny">Negar
 	  <br>
       <input type="submit" name="form" value="Adicionar"/>
     </form>
@@ -48,6 +48,9 @@
 			removeinput.remove();
 			let input = document.createElement("input");
 			let arquivos = document.getElementById("arquivos");
+			document.getElementById("time2").remove();
+
+
 			if(tipo.value=="time"){
 				input.type = "time";
 				arquivos.setAttribute("hidden",true);
@@ -64,6 +67,7 @@
 			
 			if(tipo.value=="time"){
 				let input2 = document.createElement("input");
+				input2.type = "time2"
 				input2.type = "time";
 				input2.name = "cond2";
 				elementoadd.after(input2);
