@@ -193,12 +193,8 @@ def adicionarRegraPost():
 		file.writelines(arquivo)
 		file.close()
 		cond = "\""+cond+"\""
-	fileregra = open("/etc/squid3/squid.conf","r")
-	regra = fileregra.readlines()
-	for x in regra:
-		x.replace("http_access allow autenticados","")
-	fileregra.close()
-	fileregra = open("/etc/squid3/squid.conf","w")
+	fileregra = open("/etc/squid3/squid.conf","a+")
+	regra = list()
 	if tipo != "aninhado":
 		regra.append("#regra "+ nome)
 		regra.append("acl "+nome+" "+tipo+" "+cond)
@@ -210,7 +206,6 @@ def adicionarRegraPost():
 		regra.append("http_access "+perm+" "+nome+" "+nome+"2")
 	for r in regra:
 		fileregra.write(r+"\n")
-	fileregra.write("http_access allow autenticados\n")
 	fileregra.close()
 	print(regra)
 	#subprocess.check_call(["service","squid3","restart"])
