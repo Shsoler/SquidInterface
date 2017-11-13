@@ -11,7 +11,7 @@ def restart():
 	return redirect("/")
 @app.route("/resetar")
 def resetarConf():
-	file.open("squid.conf","r")
+	file = open("squid.conf","r")
 	original = file.readlines()
 	file.close()
 	file.open("/etc/squid3/squid.conf","w")
