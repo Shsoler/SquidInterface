@@ -204,7 +204,7 @@ def teste():
 
 @app.route("/configurarSquid")
 def configurar():
-	file = open("squid.conf","r")
+	file = open("/etc/squid3/squid.conf","r")
 	lista = file.readlines()
 	valores = list()
 	valores.append("http_port ")
@@ -234,11 +234,11 @@ def configurarSquid():
 	subdir = request.form['subdir']
 	cache = request.form['cache']
 	
-	file = open("squid.conf","r")
+	file = open("/etc/squid3/squid.conf","r")
 	lista = file.read()
 	file.close()
 
-	file = open("squid.conf","w")
+	file = open("/etc/squid3/squid.conf","w")
 
 	regra = lista.split("#regras")
 		
@@ -261,7 +261,7 @@ def configurarSquid():
 	valores.append("http_access allow autenticados"+"\n")
 	valores.append("#regras")
 
-	file = open("squid.conf","w")
+	file = open("/etc/squid3/squid.conf","w")
 	file. writelines(valores)
 	file.write(regra[1])
 	file.close()
