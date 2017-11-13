@@ -194,6 +194,76 @@ def adicionarRegra():
 def teste():
 	flash("teste")
 	return "hello"
+
+
+@app.route("/configurarSquid")
+def configurar():
+	file = open("squid.conf","r")
+	lista = file.readlines()
+	valores = list()
+	valores.append("http_port ")
+	valores.append("visible_hostname ")
+	valores.append("cache_mem")
+	valores.append("maximum_object_size_in_memory")
+	valores.append("maximum_object_size")
+
+	print(valores)
+
+	port = lista[0].replace(valores[0],"")
+	host = lista[1].replace(valores[1],"")
+	cache = lista[2].replace(valores[2],"").replace(" KB","").replace(" MB","")
+	mem = lista[3].replace(valores[3],"").replace(" MB","").replace(" KB","")
+	disco = lista[4].replace(valores[4],"").replace(" KB","").replace(" MB","")
+	
+	regras = {"port":port,"host":host,"cache":cache,"mem":mem,"dire":disco}
+
+
+	return render_template("configuracao.html",regras=regras)
+
+@app.route("/configurarSquid",methods=['POST'])
+def configurarSquid():
+	host = request.form['host']
+	porta = request.form['porta']
+	disco = request.form['dire']
+	subdir = request.form['subdir']
+	cache = request.form['cache']
+	
+	file = open("squid.conf","r")
+	lista = file.read()
+	file.close()
+
+	file = open("squid.conf","w")
+
+	regra = lista.split("#regras")
+		
+	
+	valores = list()
+	valores.append("http_port "+porta+"\n")
+	valores.append("visible_hostname "+host+"\n")
+	valores.append("cache_mem "+cache+" MB"+"\n")
+	valores.append("maximum_object_size_in_memory "+subdir+ " KB"+"\n")
+	valores.append("maximum_object_size "+disco+ " KB"+"\n")
+	valores.append("minimum_object_size 0 KB"+"\n")
+	valores.append("cache_swap_low 90 "+"\n")
+	valores.append("cache_swap_high 95"+"\n")
+	valores.append("cache_dir ufs /var/spool/squid3 256 10 128 "+"\n")
+	valores.append("cache_acess_log /var/log/squid3/acess.log/squid3/acess"+"\n")
+	valores.append("#pass"+"\n")
+	valores.append("auth_param basic realm squid"+"\n")
+	valores.append("auth_param basic program /usr/lib/squi3/basic_ncsa_auth /etc/squid3/squid_pass"+"\n")
+	valores.append("acl autenticados proxy_auth REQUIRED"+"\n")
+	valores.append("http_access allow autenticados"+"\n")
+	valores.append("#regras")
+
+	file = open("squid.conf","w")
+	file. writelines(valores)
+	file.write(regra[1])
+	file.close()
+	return redirect("/")
+
+
+
+
 if __name__ == '__main__':
     app.secret_key = "secret_key"
     app.run(debug=True,host="0.0.0.0")

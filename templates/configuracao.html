@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Configurar Squid</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/estilo.css') }}">
+</head>
+<body>
+	<h1>Configurar Squid</h1>
+	<div class="container">
+		<form method="post" action="/configurarSquid">
+			<p>Porta</p>
+			<input type="text" name="porta" value="{{regras.port}}">
+			<br>
+			<p>Hostname</p>
+			<input type="text" name="host" value="{{regras.host}}">
+			<br>
+			<p>Tamanho Diretórios(MB)</p>
+			<input type="text" name="dire" value="{{regras.dire}}">
+			<br>
+			<p>Tamanho Subdiretórios(KB)</p>
+			<input type="text" name="subdir" value="{{regras.mem}}">
+			<br>
+			<p>Cache de Memória</p>
+			 <select name="cache" value="{{regras.cache}}">
+				<option value="16" >16 MB</option>
+				<option value="32">32 MB</option>
+				<option value="64">64 MB</option>
+			</select>
+			<br>
+			<input id="submit" type="submit" value="Enviar">
+		</form>
+	</div>
+	<div class="retorno">
+		<h3><a href="">Inicio</a></h3>
+	</div>
+</body>
+</html>
