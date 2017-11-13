@@ -10,8 +10,25 @@
 		<ul>
 			<li><a href="/listar">Regras</a></li>
 			<li><a href="/listarUser">Autenticação</a></li>
+			<li><a href="/configurarSquid">Configuração</a></li>
+			<li><a 	onclick="resetar()" href="#">Resetar</a></li>
+			<li><a onclick="restart()" href="#">Reiniciar</a></li>
 			<li><a href="/logout">Sair</a></li>
 		</ul>
 	</div>
+	<script>
+		function resetar(){
+			let resposta = confirm("Resetar as configurações Squid?")
+			if(resposta == true){
+				window.location="/resetar";
+			}
+		}
+		function restart(){
+			let resposta = confirm("Reiniciar Squid?")
+			if(resposta == true){
+				window.location="/reiniciar";
+			}
+		}
+	</script>
 </body>
 </html>

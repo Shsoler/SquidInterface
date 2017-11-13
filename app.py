@@ -5,6 +5,11 @@ import subprocess
 import hashlib
 app = Flask(__name__)
 
+@app.route("/restart")
+def restart():
+	subprocess.check_call(["service","squid3","restart"])
+	return redirect("/")
+@app.route("/resetar")
 def resetarConf():
 	file.open("squid.conf","r")
 	original = file.readlines()
@@ -12,7 +17,8 @@ def resetarConf():
 	file.open("/etc/squid3/squid.conf","w")
 	file.writelines(original)
 	file.close()
-
+	subprocess.check_call(["squid3","-k","reconfigure"])
+	return redirect("/")
 #login
 
 @app.route("/")
