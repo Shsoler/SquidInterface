@@ -48,3 +48,7 @@ a{
 .container a{
 	color: black;
 }
+
+td{
+	padding-left: 5em;
+}

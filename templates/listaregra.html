@@ -7,12 +7,21 @@
     <h1>Regras</h1>
     <div class="container">
       <table>
+         <tr>
+          <th>Nome</th>
+          <th>Tipo</th>
+          <th>Condição</th>
+          <th>Permição</th>
+        </tr>
       {% for regra in regras %}
         <tr>
-          <td>{{regra}}</p></td>
-  		<td>	
-  		 <td><a href="/listar/Excluir/{{regra}}">Excluir</a></td>
-  		</td>
+  		    <td>{{regra["nome"]}} </td>
+          <td>{{regra["tipo"]}} </td>
+          <td>{{regra["cond"]}} </td>
+          <td>{{regra["perm"]}} </td>  
+          <td>
+            <a href="/listar/Excluir/{{regra["nome"]}}">Excluir</a>
+          </td>
         </tr>
       {% endfor %}
     </table>

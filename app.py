@@ -7,10 +7,14 @@ app = Flask(__name__)
 
 @app.route("/restart")
 def restart():
+	if not session.get('logged_in'):
+		return render_template('login.html')
 	subprocess.check_call(["service","squid3","restart"])
 	return redirect("/")
 @app.route("/resetar")
 def resetarConf():
+	if not session.get('logged_in'):
+		return render_template('login.html')
 	file = open("squid.conf","r")
 	original = file.readlines()
 	file.close()
@@ -24,7 +28,7 @@ def resetarConf():
 @app.route("/")
 def home():
     if not session.get('logged_in'):
-        return render_template('login.html')
+    	return render_template('login.html')
     else:
         return render_template('home.html')
 
@@ -90,6 +94,8 @@ def addpalavraform():
 
 @app.route("/listar")
 def listarRegra():
+	if not session.get('logged_in'):
+		return render_template('login.html')
 	file = open("/etc/squid3/squid.conf","r")
 	squid = file.read()
 	squidList = squid.split("#regras")
@@ -103,11 +109,15 @@ def listarRegra():
 	print(regrasLimpas)
 	regrasFinais = list()
 	for x in regrasLimpas:
-		regrasFinais.append(x.split(" ")[1].split("\n")[0])	
+		regra = x.replace("\n","").replace("acl","").replace("http_access","").replace("-i","").replace("  "," ").split(" ")
+		dic = {"nome":regra[1],"tipo":regra[3],"cond":regra[4],"perm":regra[5]}
+		regrasFinais.append(dic)
 	return render_template("listaregra.html",regras = regrasFinais)
 
 @app.route("/listar/Excluir/<regra>",methods=['GET'])
 def removerRegraPost(regra):
+	if not session.get('logged_in'):
+		return render_template('login.html')
 	file = open("/etc/squid3/squid.conf","r")
 	squid = file.readlines()
 	file.close()
@@ -123,6 +133,8 @@ def removerRegraPost(regra):
 	
 @app.route("/adicionarUser",methods=['POST'])
 def addUser():
+	if not session.get('logged_in'):
+		return render_template('login.html')
 	user = request.form['user']
 	senha = request.form['senha']
 	m = hashlib.md5(str(senha).encode('utf-8'))
@@ -134,16 +146,22 @@ def addUser():
 
 @app.route("/adicionarUser")
 def addUserClear():
+	if not session.get('logged_in'):
+		return render_template('login.html')
 	return render_template("adicionarUser.html")
 	
 @app.route("/listarUser")
 def listarUser():
+	if not session.get('logged_in'):
+		return render_template('login.html')
 	file = open("/etc/squid3/squid_passwd","r")
 	senhas = file.readlines()
 	return render_template("listaUser.html",senhas = senhas)
 
 @app.route("/listarUser/Excluir/<excluir>",methods=['GET'])
 def listarUserDel(excluir):
+	if not session.get('logged_in'):
+		return render_template('login.html')
 	file = open("/etc/squid3/squid_passwd","r")
 	senhas = file.readlines()
 	file.close()
@@ -157,6 +175,8 @@ def listarUserDel(excluir):
 	
 @app.route("/adicionar",methods=['POST'])
 def adicionarRegraPost():
+	if not session.get('logged_in'):
+		return render_template('login.html')
 	nome = request.form['nome']
 	tipo = request.form['tipo']
 	cond = request.form['cond']
@@ -194,6 +214,8 @@ def adicionarRegraPost():
 	
 @app.route("/adicionar")
 def adicionarRegra():
+	if not session.get('logged_in'):
+		return render_template('login.html')
 	return render_template("addregra.html")
 
 @app.route("/teste")
@@ -204,6 +226,8 @@ def teste():
 
 @app.route("/configurarSquid")
 def configurar():
+	if not session.get('logged_in'):
+		return render_template('login.html')
 	file = open("/etc/squid3/squid.conf","r")
 	lista = file.readlines()
 	valores = list()
@@ -228,6 +252,8 @@ def configurar():
 
 @app.route("/configurarSquid",methods=['POST'])
 def configurarSquid():
+	if not session.get('logged_in'):
+		return render_template('login.html')
 	host = request.form['host']
 	porta = request.form['porta']
 	disco = request.form['dire']
