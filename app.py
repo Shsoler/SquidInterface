@@ -14,7 +14,7 @@ def resetarConf():
 	file = open("squid.conf","r")
 	original = file.readlines()
 	file.close()
-	file.open("/etc/squid3/squid.conf","w")
+	file = open("/etc/squid3/squid.conf","w")
 	file.writelines(original)
 	file.close()
 	subprocess.check_call(["squid3","-k","reconfigure"])
