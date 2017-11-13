@@ -197,7 +197,6 @@ def adicionarRegraPost():
 	regra = fileregra.readlines()
 	for x in regra:
 		x.replace("http_access allow autenticados","")
-	regra.remove("http_access allow autenticados")
 	fileregra.close()
 	fileregra = open("/etc/squid3/squid.conf","w")
 	if tipo != "aninhado":
