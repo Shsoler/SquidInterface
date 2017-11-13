@@ -195,6 +195,9 @@ def adicionarRegraPost():
 		cond = "\""+cond+"\""
 	fileregra = open("/etc/squid3/squid.conf","r")
 	regra = fileregra.readlines()
+	for x in regra:
+		if "http_access allow autenticados" in x:
+			regra.remove(x) 
 	regra.remove("http_access allow autenticados")
 	fileregra.close()
 	fileregra = open("/etc/squid3/squid.conf","w")
